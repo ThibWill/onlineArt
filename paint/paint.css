@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.mainFrame {
+    border: 1px solid black;
+}
+
+.percentCompletion {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+}
