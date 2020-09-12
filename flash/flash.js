@@ -1,6 +1,5 @@
 var numberLines = 32;
-
-function generateGrid() {
+window.onload = () => {
   var main = document.getElementById("main");
   var numberCircle = 0;
   var diameterCircle = Math.floor(main.offsetWidth / numberLines);
@@ -53,8 +52,6 @@ function flash() {
     }
   }
 }
-
-setTimeout(() => { generateGrid(); }, 200);
 
 setInterval(() => {
 	flash();

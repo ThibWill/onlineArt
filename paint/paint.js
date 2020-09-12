@@ -12,7 +12,7 @@ window.onload = function() {
     /* Draw a black circle on the canvas */ 
     function colorify(event) {
       ctx.beginPath();
-      ctx.arc(event.clientX - mainFrame.offsetLeft, event.clientY - mainFrame.offsetTop, 30, 10, 0, 2 * Math.PI);
+      ctx.arc(event.clientX - mainFrame.offsetLeft, event.clientY - mainFrame.offsetTop, 30, 0, 2 * Math.PI, 0);
       ctx.fill();
     }
     mainFrame.onmousemove = colorify;
@@ -39,11 +39,11 @@ window.onload = function() {
     function completeColor() {
       clearInterval(intervalCount);
       mainFrame.onmousemove = null;
-      setInterval(changeColorCanvas, 50);
+      setInterval(changeColorCanvas, 20);
     }
 
     let rgb = [0, 0, 0];
-    let limits = [0, 254];
+    let limits = [0, 255];
     let direction = 1;
     let sign = 1;
     /* Allow to change the color randomly after fill 100% */
@@ -54,7 +54,7 @@ window.onload = function() {
       }
       let column = Math.floor(Math.random() * 3);
       ctx.clearRect(0, 0, mainFrameWidth, mainFrameHeight);
-      rgb[column] += 2 * sign;
+      rgb[column] += 1 * sign;
       ctx.fillStyle = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
       ctx.fillRect(0, 0, mainFrameWidth, mainFrameHeight);
     }
