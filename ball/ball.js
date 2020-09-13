@@ -6,8 +6,8 @@ window.onload = () => {
   const radiusBall = 30;
   const nbBalls = Math.floor(mainFrameHeight / (radiusBall*2));
   const colors = [["#facc70", 25], ["#de7a22", 10], ["#20948b", 30], ["#6ab187", 7]];
-  let intervals = new Array(nbBalls);
-  let infosBall = new Array(nbBalls);
+  const intervals = new Array(nbBalls);
+  const infosBall = new Array(nbBalls);
 
   for(let i=0; i < nbBalls; i++) {
     infosBall[i] = [radiusBall, 1];
@@ -39,6 +39,8 @@ window.onload = () => {
       intervals[i] = setInterval(() => moveBall(radiusBall + radiusBall*2*i, i, colors[rand][0]), colors[rand][1]);
     }
   }
+  /* start the system */
   changeColors();
+  /* change colors and speed every 10 seconds */
   setInterval(changeColors, 10000);
 }
