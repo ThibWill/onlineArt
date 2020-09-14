@@ -5,8 +5,15 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  flex-direction: column;
 }
 
 .mainFrame {
   border: 0.5px solid black;
+}
+
+.arrowsFrame {
+  margin-bottom: 50px;
+  border-radius: 10px;
+  border: black solid 1px;
 }
