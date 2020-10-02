@@ -55,8 +55,8 @@ window.onload = () => {
     drawLine(xStart+50, yStart, xStart+100, yStart+20, context);
 
     /*drawLine(xStart+40, yStart-10, xStart+50, yStart-15);
-    drawLine(xStart+50, yStart-15, xStart+60, yStart-10);*/
-    /*drawLine(xStart+40, yStart+10, xStart+50, yStart+5);
+    drawLine(xStart+50, yStart-15, xStart+60, yStart-10);
+    drawLine(xStart+40, yStart+10, xStart+50, yStart+5);
     drawLine(xStart+50, yStart+5, xStart+60, yStart+10);*/
   }
 
