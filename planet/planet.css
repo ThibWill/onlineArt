@@ -6,8 +6,10 @@ body {
   justify-content: center;
   overflow: hidden;
   flex-direction: column;
+  background: black;
 }
 
 .mainFrame {
   border: 0.5px solid black;
+  background: black;
 }
