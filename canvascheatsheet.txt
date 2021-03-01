@@ -1,0 +1,27 @@
+x:0 y:0 (origin) is the left up corner of the canvas
+To draw movements => erase canvas partially or totally, then redraw
+To help => setInterval(), setTimeout(), window.requestAnimationFrame(func);
+
+// get canvas in html
+const canvas = document.getElement("monCanvas");
+
+// get context 2d
+const context = canvas.getContext("2d");
+
+// draw arc
+context.beginPath();
+context.arc(xstart, ystart, radius, anglestart, angleend, directiondraw);
+context.fill();
+
+// add color for next fills
+context.fillStyle = "color";
+
+// move origin on the canvas
+context.translate(newX, newY);
+
+// erase a part of the canvas
+context.clearRect(xstart, ystart, width, height);
+
+// put text 
+ctx.font = '48px serif';
+context.fillText(text, x, y [, maxWidth]);
