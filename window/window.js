@@ -1,33 +1,37 @@
+/**
+ * @author Thibault Willer
+ * Date: 09/11/2021
+ */
 window.onload = () => {
 
-  const maxHeight = window.innerHeight;
-  const maxWidth = window.innerWidth;
-  
-  const canvas = document.createElement('canvas');
-  canvas.height = maxHeight;
-  canvas.width = maxWidth;
-  document.body.append(canvas);
+  const MAX_HEIGHT = window.innerHeight;
+  const MAX_WIDTH = window.innerWidth;
 
-  const canvasOperations = canvasAPI(canvas.getContext('2d'));
-
-  const minBorderExplorer = maxWidth > maxHeight ? maxHeight : maxWidth;
-  const radiusWindow = minBorderExplorer / 3;
-  const barWidth = 16;
-  function drawWindow()
-  {
-    canvasOperations.circleFilled(maxWidth / 2, maxHeight / 2, radiusWindow, 0, 2 * Math.PI, 0);
-    canvasOperations.circleClear(maxWidth / 2, maxHeight / 2, radiusWindow - 20);
-    canvasOperations.rectangle(maxWidth / 2 - barWidth / 2, maxHeight / 2 - minBorderExplorer / 3, barWidth, 2 * radiusWindow);
-    canvasOperations.rectangle(maxWidth / 2 - minBorderExplorer / 3, maxHeight / 2 - barWidth / 2, 2 * radiusWindow, barWidth);
-  }
+  const MIN_BORDER_EXPLORER = MAX_WIDTH > MAX_HEIGHT ? MAX_HEIGHT : MAX_WIDTH;
+  const RADIUS_WINDOW = MIN_BORDER_EXPLORER / 3;
+  const BAR_WIDTH = 16;
 
   const WINDOW_RAIN = {
     xStart: 0,
-    xEnd: maxWidth,
+    xEnd: MAX_WIDTH,
     yStart: 0,
-    yEnd: maxHeight,
+    yEnd: MAX_HEIGHT,
     speedRain: 5,
     newRain: 4
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.height = MAX_HEIGHT;
+  canvas.width = MAX_WIDTH;
+  document.body.append(canvas);
+  const canvasOperations = canvasAPI(canvas.getContext('2d'));
+
+  function drawWindow()
+  {
+    canvasOperations.circleFilled(MAX_WIDTH / 2, MAX_HEIGHT / 2, RADIUS_WINDOW, 0, 2 * Math.PI, 0);
+    canvasOperations.circleClear(MAX_WIDTH / 2, MAX_HEIGHT / 2, RADIUS_WINDOW - 20);
+    canvasOperations.rectangle(MAX_WIDTH / 2 - BAR_WIDTH / 2, MAX_HEIGHT / 2 - MIN_BORDER_EXPLORER / 3, BAR_WIDTH, 2 * RADIUS_WINDOW);
+    canvasOperations.rectangle(MAX_WIDTH / 2 - MIN_BORDER_EXPLORER / 3, MAX_HEIGHT / 2 - BAR_WIDTH / 2, 2 * RADIUS_WINDOW, BAR_WIDTH);
   }
 
   let rains = [];
@@ -54,8 +58,8 @@ window.onload = () => {
     rains.forEach(rain => {
       const { x, y } = calculateEndRain(rain.xStartRain, rain.yStartRain, rain.lengthRain, rain.angleRain);
       if (
-          (x - maxWidth / 2) ** 2 + (y - maxHeight / 2) ** 2 < (radiusWindow) ** 2 &&
-          (rain.xStartRain - maxWidth / 2) ** 2 + (rain.yStartRain - maxHeight / 2) ** 2 < (radiusWindow) ** 2
+          (x - MAX_WIDTH / 2) ** 2 + (y - MAX_HEIGHT / 2) ** 2 < (RADIUS_WINDOW) ** 2 &&
+          (rain.xStartRain - MAX_WIDTH / 2) ** 2 + (rain.yStartRain - MAX_HEIGHT / 2) ** 2 < (RADIUS_WINDOW) ** 2
         ) {
         canvasOperations.line(rain.xStartRain, rain.yStartRain, x, y);
       }
@@ -88,7 +92,6 @@ window.onload = () => {
     rains = rains.filter(rain => rain.yStartRain < WINDOW_RAIN.yEnd);
   }
 
-
   let animated = false;
   function raining()
   {
@@ -104,7 +107,7 @@ window.onload = () => {
     window.requestAnimationFrame(raining);
   }
 
-  (function(){
+  const animation = (function(){
     let colors = ['#003B46', '#07575B', '#66A5AD', '#C4DFE6'];
     let indexColor = 0;
     let positiv = true;
@@ -127,8 +130,14 @@ window.onload = () => {
       nextIndexColors();
       canvasOperations.setStrokeStyle(colors[indexColor]);
     }, 5000)
-  })();
-  
+  });
 
+  window.onkeydown = (e) => {
+    console.log(e);
+    if(e.code === 'Space') {
+      animation();
+    } 
+  }
+  
   window.requestAnimationFrame(raining);
 }
