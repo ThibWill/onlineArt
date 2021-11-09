@@ -1,21 +1,24 @@
 window.onload = () => {
-  const canvas = document.createElement('canvas');
+
   const maxHeight = window.innerHeight;
   const maxWidth = window.innerWidth;
-  const minBorderExplorer = maxWidth > maxHeight ? maxHeight : maxWidth;
+  
+  const canvas = document.createElement('canvas');
   canvas.height = maxHeight;
   canvas.width = maxWidth;
   document.body.append(canvas);
 
   const canvasOperations = canvasAPI(canvas.getContext('2d'));
 
-  const radiusWindow = minBorderExplorer / 3
+  const minBorderExplorer = maxWidth > maxHeight ? maxHeight : maxWidth;
+  const radiusWindow = minBorderExplorer / 3;
+  const barWidth = 16;
   function drawWindow()
   {
     canvasOperations.circleFilled(maxWidth / 2, maxHeight / 2, radiusWindow, 0, 2 * Math.PI, 0);
     canvasOperations.circleClear(maxWidth / 2, maxHeight / 2, radiusWindow - 20);
-    canvasOperations.rectangle(maxWidth / 2 - 8, maxHeight / 2 - minBorderExplorer / 3, 16, 2 * radiusWindow);
-    canvasOperations.rectangle(maxWidth / 2 - minBorderExplorer / 3, maxHeight / 2 - 8, 2 * radiusWindow, 16);
+    canvasOperations.rectangle(maxWidth / 2 - barWidth / 2, maxHeight / 2 - minBorderExplorer / 3, barWidth, 2 * radiusWindow);
+    canvasOperations.rectangle(maxWidth / 2 - minBorderExplorer / 3, maxHeight / 2 - barWidth / 2, 2 * radiusWindow, barWidth);
   }
 
   const WINDOW_RAIN = {
@@ -53,8 +56,8 @@ window.onload = () => {
       if (
           (x - maxWidth / 2) ** 2 + (y - maxHeight / 2) ** 2 < (radiusWindow) ** 2 &&
           (rain.xStartRain - maxWidth / 2) ** 2 + (rain.yStartRain - maxHeight / 2) ** 2 < (radiusWindow) ** 2
-         ) {
-          canvasOperations.line(rain.xStartRain, rain.yStartRain, x, y);
+        ) {
+        canvasOperations.line(rain.xStartRain, rain.yStartRain, x, y);
       }
     });
   }
@@ -86,18 +89,46 @@ window.onload = () => {
   }
 
 
+  let animated = false;
   function raining()
   {
+    if (!animated) { 
+      clearCanvas();
+      drawWindow();
+    }
+
     moreRain();
-    clearCanvas();
-    drawWindow();
     drawRain();
     moveRain();
     deleteRain();
     window.requestAnimationFrame(raining);
   }
 
+  (function(){
+    let colors = ['#003B46', '#07575B', '#66A5AD', '#C4DFE6'];
+    let indexColor = 0;
+    let positiv = true;
+    function nextIndexColors()
+    {
+      if (indexColor === 0) {
+        positiv = true;
+      } else if (indexColor === colors.length) {
+        positiv = false;
+      }
 
-  drawWindow();
+      if (positiv) {
+        indexColor ++;
+      } else {
+        indexColor --;
+      }
+    }
+    return setInterval(function() {
+      animated = true;
+      nextIndexColors();
+      canvasOperations.setStrokeStyle(colors[indexColor]);
+    }, 5000)
+  })();
+  
+
   window.requestAnimationFrame(raining);
 }
