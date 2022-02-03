@@ -9,7 +9,7 @@ window.onload = () => {
     const CLOCK_RADIUS = MAX_HEIGHT / 2.1;
     const INNER_CLOCK_RADIUS = MAX_HEIGHT / 2.25;
     const WIDTH_ARROW = (MAX_HEIGHT / 2.5);
-    const HEIGHT_ARROW = 12;
+    const HEIGHT_ARROW = 25;
     const ARROW_COLORS = ["#ef545b", "#c0df98", "#6777be", "#9b7fb4", "#093727", "#b9eb7c"];
 
     const ARROWS = Array(8).fill(0).map(e => {
@@ -167,7 +167,7 @@ window.onload = () => {
         context.save();
         context.beginPath();
         context.fillStyle = "#BA8C63";
-        context.arc(MAX_WIDTH / 2, MAX_HEIGHT / 2, 10, 0, 2 * Math.PI, true); 
+        context.arc(MAX_WIDTH / 2, MAX_HEIGHT / 2, (HEIGHT_ARROW + 10) / 2, 0, 2 * Math.PI, true); 
         context.fill();
         context.restore();
     }
