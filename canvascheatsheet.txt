@@ -8,13 +8,20 @@ const canvas = document.getElement("monCanvas");
 // get context 2d
 const context = canvas.getContext("2d");
 
+// draw rectangle
+context.fillRect(xStart, yStart, width, height);
+context.strokeRect(xStart, yStart, width, height);
+
 // draw arc
 context.beginPath();
 context.arc(xstart, ystart, radius, anglestart, angleend, directiondraw);
 context.fill();
 
-// add color for next fills
+// change color for next fills
 context.fillStyle = "color";
+
+// change color for next strokes
+context.strokeStyle = "color";
 
 // move origin on the canvas
 context.translate(newX, newY);
