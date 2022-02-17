@@ -29,6 +29,9 @@ const drawMargin = (ctx, marginLength, w, h) => {
 const sketch = () => {
   return ({ context, width, height }) => {
     const radiusCircle = width / 10;
+    context.fillStyle = "white";
+    context.fillRect(0, 0, width, height);
+
     for (let i = radiusCircle; i < width; i += 2 * 1.75 * radiusCircle) {
       for (let j = 0; j < height; j += radiusCircle) {
         drawCircle(context, i, j, radiusCircle, colors[0][Math.floor(Math.random() * 5)])
