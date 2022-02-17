@@ -34,8 +34,8 @@ const drawMargin = (ctx, marginLength, w, h) => {
 
 const drawGridRectangles = (ctx, width, height) => {
   const widthRectangle = 1;
-  const heightRectangle = 4.5;
-  const borderRectangle = 0.25;
+  const heightRectangle = 5;
+  const borderRectangle = 0.35;
   for (let i = 0; i < width * 2 ; i += widthRectangle + borderRectangle) {
     for (let j = random.range(-4, -1); j < height * 2; j += heightRectangle + borderRectangle) {
       drawRectangle(ctx, i, j, widthRectangle, heightRectangle, random.value() < 0.02 ? "#DE213D" : "#00DEC2");
@@ -45,7 +45,7 @@ const drawGridRectangles = (ctx, width, height) => {
 
 const sketch = () => {
   return ({ context, width, height }) => {
-    drawRectangle(context, 0, 0, width, height, "#FFF1D9");
+    drawRectangle(context, 0, 0, width, height, "white");
     initStateCanvas(context);
     drawGridRectangles(context, width, height);
     context.restore();
