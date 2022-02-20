@@ -1,10 +1,10 @@
 {
-  "name": "rope",
+  "name": "concentric",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "canvas-sketch rope.js --open"
+    "start": "canvas-sketch concentric.js --open"
   },
   "author": "Thibault Willer",
   "license": "ISC",

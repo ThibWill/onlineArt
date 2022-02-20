@@ -1,3 +1,7 @@
+/**
+ * @author Thibault Willer
+ * Date: 19/02/2022
+ */
 const canvasSketch = require('canvas-sketch');
 const pallette = require("nice-color-palettes/100.json");
 

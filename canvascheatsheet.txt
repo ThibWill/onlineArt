@@ -8,6 +8,12 @@ const canvas = document.getElement("monCanvas");
 // get context 2d
 const context = canvas.getContext("2d");
 
+// draw line
+context.beginPath();
+context.moveTo(x, y);
+context.lineTo(x2, y2);
+context.stroke(); 
+
 // draw rectangle
 context.fillRect(xStart, yStart, width, height);
 context.strokeRect(xStart, yStart, width, height);
