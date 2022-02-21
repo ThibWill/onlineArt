@@ -17,7 +17,7 @@ const choseSign = (ctx, x, y, proba) => {
 const drawText = (ctx, x, y, sign) => {
   ctx.save();
   ctx.fillStyle = random.value() > 0.01 ? 'white': 'orange';
-  ctx.font = '70px serif';
+  ctx.font = '80px serif';
   ctx.fillText(sign, x, y);
   ctx.restore();
 }
