@@ -36,5 +36,5 @@ context.translate(newX, newY);
 context.clearRect(xstart, ystart, width, height);
 
 // put text 
-ctx.font = '48px serif';
+context.font = '48px serif';
 context.fillText(text, x, y [, maxWidth]);

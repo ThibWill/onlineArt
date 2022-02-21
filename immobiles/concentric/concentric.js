@@ -5,7 +5,6 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random')
 const palettes = require('nice-color-palettes/500.json');
-const palette = palettes[Math.floor(random.range(0, 499))];
 
 const settings = {
   dimensions: [ 2048, 2048 ],
@@ -88,6 +87,7 @@ const drawMargin = (ctx, marginHeight, width, height) => {
 const sketch = () => {
   return ({ context, width, height }) => {
     const nbPlanches = 5000;
+    const palette = palettes[Math.floor(random.range(0, 499))];
     const vanishingPoint = {
       x: width / 2,
       y: height / 2
@@ -111,11 +111,11 @@ const sketch = () => {
         planch.width, planch.height, 
         2048 / 2
       );
-      drawPlanch(context, coords, palette[Math.floor(random.range(0, 4))]);
+      drawPlanch(context, coords, palette[Math.floor(random.range(0, 5))]);
     }
 
     context.restore();
-    drawMargin(context, 200, width, height);
+    drawMargin(context, width / 10, width, height);
   };
 };
 
