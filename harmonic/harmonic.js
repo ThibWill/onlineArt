@@ -19,24 +19,39 @@ function canvasOperations(canvas) {
   const OFFSET_SIDES = 20;
 
   function drawSides ({ xStart, yStart }, { xEnd, yEnd }) {
+    context.save();
+    context.strokeStyle = "rgba(0, 0, 0, 0.5)";
+
     context.beginPath();
     context.moveTo(xStart, yStart);
     context.lineTo(xEnd, yEnd);
     context.closePath();
     context.stroke();
+
+    context.restore();
   }
 
   function drawRails ({ xStart, yStart }, { xEnd, yEnd }) {
+    context.save();
+    context.strokeStyle = "rgba(0, 0, 0, 0.5)";
+
     context.beginPath();
     context.moveTo(xStart, yStart);
     context.lineTo(xEnd, yEnd);
     context.stroke();
+
+    context.restore();
   }
 
-  function drawBall ({ xCenter, yCenter }, radius) {
+  function drawBall ({ xCenter, yCenter }, { ratioX, ratioY }, radius) {
+    context.save();
+    context.fillStyle = `rgb(${Math.floor(255 - 200 * ratioX)}, 0, ${Math.floor(255 - 200 * ratioY)}, 0.5)`;
+
     context.beginPath();
     context.arc(xCenter, yCenter, radius, 0, 2 * Math.PI, true);
-    context.stroke();
+    context.fill();
+
+    context.restore();
   }
 
   function drawStatic (numberBalls) {
@@ -63,6 +78,10 @@ function canvasOperations(canvas) {
 
       drawBall(
         { xCenter: OFFSET_FRAME + radiusBall, yCenter: axeY }, 
+        { 
+          ratioX: (i + 1) / numberBalls, 
+          ratioY: axeY 
+        }, 
         radiusBall
       );
     }
