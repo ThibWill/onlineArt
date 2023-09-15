@@ -15,31 +15,60 @@ function canvasOperations(canvas) {
   const context = canvas.getContext('2d');
   const widthCanvas = canvas.width;
   const heightCanvas = canvas.height;
-  const OFFSET_FRAME = 20;
-  const WIDTH_SIDES = 20;
+  const OFFSET_FRAME = 200;
+  const OFFSET_SIDES = 20;
+
+  function drawSides ({ xStart, yStart }, { xEnd, yEnd }) {
+    context.beginPath();
+    context.moveTo(xStart, yStart);
+    context.lineTo(xEnd, yEnd);
+    context.closePath();
+    context.stroke();
+  }
+
+  function drawRails ({ xStart, yStart }, { xEnd, yEnd }) {
+    context.beginPath();
+    context.moveTo(xStart, yStart);
+    context.lineTo(xEnd, yEnd);
+    context.stroke();
+  }
+
+  function drawBall ({ xCenter, yCenter }, radius) {
+    context.beginPath();
+    context.arc(xCenter, yCenter, radius, 0, 2 * Math.PI, true);
+    context.stroke();
+  }
 
   function drawStatic (numberBalls) {
-    context.clearRect(OFFSET_FRAME, OFFSET_FRAME, WIDTH_SIDES, heightCanvas - 2 * OFFSET_FRAME);
-    context.clearRect(widthCanvas - OFFSET_FRAME - WIDTH_SIDES, OFFSET_FRAME, WIDTH_SIDES, heightCanvas - 2 * OFFSET_FRAME);
+    console.log(context)
 
-    const gapY = 100 / numberBalls;
+    drawSides(
+      { xStart: OFFSET_FRAME, yStart: OFFSET_FRAME - OFFSET_SIDES }, 
+      { xEnd: OFFSET_FRAME, yEnd: heightCanvas - OFFSET_FRAME + OFFSET_SIDES }
+    );
+    drawSides(
+      { xStart: widthCanvas - OFFSET_FRAME, yStart: OFFSET_FRAME - OFFSET_SIDES }, 
+      { xEnd: widthCanvas - OFFSET_FRAME, yEnd: heightCanvas - OFFSET_FRAME + OFFSET_SIDES }
+    );
+
+    const gapY = 1 / numberBalls;
+    const radiusBall = (heightCanvas - 2 * OFFSET_FRAME) / (numberBalls * 2);
     for (let i = 0; i < numberBalls; i++) {
-      const axeY = (((i + 1) * gapY) * (heightCanvas - 2 * OFFSET_FRAME)) + OFFSET_FRAME;
-      context.beginPath();
-      context.moveTo(OFFSET_FRAME + WIDTH_SIDES, axeY);
-      context.lineTo(widthCanvas - WIDTH_SIDES - OFFSET_FRAME, axeY);
-      context.stroke();
+      const axeY = (((i + 1) * gapY) * (heightCanvas - 2 * OFFSET_FRAME)) - radiusBall + OFFSET_FRAME;
+      
+      drawRails(
+        { xStart: OFFSET_FRAME + radiusBall, yStart: axeY }, 
+        { xEnd: widthCanvas - OFFSET_FRAME - radiusBall, yEnd: axeY }
+      );
 
-      drawBall(OFFSET_FRAME + WIDTH_SIDES + 15, axeY, 15)
+      drawBall(
+        { xCenter: OFFSET_FRAME + radiusBall, yCenter: axeY }, 
+        radiusBall
+      );
     }
   }
 
-  function drawBall (xPos, yPos) {
-    const radius = 15
-    context.beginPath();
-    context.arc(OFFSET_FRAME + WIDTH_SIDES + radius, axeY, radius, 0, 2 * Math.PI, true);
-    context.stroke();
-  }
+
 
   function erase () {
 
@@ -89,7 +118,10 @@ window.onload = () => {
   const MAX_WIDTH = window.innerWidth;
   const MAX_HEIGHT = window.innerHeight;
   
-  const canavsHarmonic = document.getElementById('harmonic')
-  initCanvas(window, canavsHarmonic, MAX_WIDTH, MAX_HEIGHT)
+  const canvasHarmonic = document.getElementById('harmonic')
+  initCanvas(window, canvasHarmonic, MAX_WIDTH, MAX_HEIGHT)
+
+  const canvasOps = canvasOperations(canvasHarmonic)
+  canvasOps.drawStatic(harmonicModel.number_balls)
 
 }
