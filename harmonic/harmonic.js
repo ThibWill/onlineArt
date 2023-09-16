@@ -14,7 +14,7 @@ function canvasOperations(canvas) {
   const context = canvas.getContext('2d');
   const widthCanvas = canvas.width;
   const heightCanvas = canvas.height;
-  const OFFSET_FRAME = 200;
+  const OFFSET_FRAME = 300;
   const OFFSET_SIDES = 20;
 
   function drawSides ({ xStart, yStart }, { xEnd, yEnd }) {
@@ -116,7 +116,8 @@ function controllerHarmonic (canvasHarmonic) {
     harmonicModel.balls = new Array(harmonicModel.number_balls).fill(false).map((_ball, i) => ({
       progress: 0,
       direction: 1,
-      timeOffset: i * 200
+      speed: 1 + i * 0.05,
+      timeOffset: 0
     }));
     // Init vue
     canvasOps.drawStatic(harmonicModel.number_balls);
@@ -131,12 +132,7 @@ function controllerHarmonic (canvasHarmonic) {
   }
 
   function calculateBallsPosition (balls) {
-    return [];
-  }
-
-  function lifeHarmonic () {
-    // Update model
-    harmonicModel.balls = harmonicModel.balls.map(ball => {
+    harmonicModel.balls = balls.map(ball => {
       if (ball.timeOffset > 0) {
         return {
           ...ball,
@@ -153,18 +149,23 @@ function controllerHarmonic (canvasHarmonic) {
       return {
         ...ball,
         direction,
-        progress: progress + direction * 0.1
+        progress: progress + direction * ball.speed * 0.2
       }
     })
+  }
+
+  function lifeHarmonic () {
+    // Update model
+    calculateBallsPosition(harmonicModel.balls);
 
     // Erase canvas
-    canvasOps.erase()
+    canvasOps.erase();
 
     // Recreate frame
     canvasOps.drawStatic(harmonicModel.number_balls);
 
     // Update vue
-    canvasOps.drawDynamic(harmonicModel.balls)
+    canvasOps.drawDynamic(harmonicModel.balls);
   }
 
   return {
@@ -187,6 +188,6 @@ window.onload = () => {
   harmonicController.initSystem()
 
   // Start harmonic
-  setInterval(harmonicController.lifeHarmonic, 10);
+  setInterval(harmonicController.lifeHarmonic, 1);
 
 }
