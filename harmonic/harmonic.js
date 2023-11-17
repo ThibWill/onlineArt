@@ -44,7 +44,6 @@ function canvasOperations(canvas) {
 
   function drawBall ({ xCenter, yCenter }, { ratioX, ratioY }, radius) {
     context.save();
-    console.log(ratioY)
     context.strokeStyle = `rgb(${Math.floor(255 - 200 * ratioX)}, 0, ${Math.floor(255 - 200 * ratioY)}, 0.5)`;
 
     context.lineWidth = 2;
@@ -89,7 +88,7 @@ function canvasOperations(canvas) {
         { xCenter: OFFSET_FRAME + radiusBall + ballProgress * (widthCanvas - 2 * (OFFSET_FRAME + radiusBall)), yCenter: axeY }, 
         { 
           ratioX: ballProgress, 
-          ratioY: gapY * ( i + 1)
+          ratioY: gapY * (i + 1)
         }, 
         radiusBall
       );
@@ -119,8 +118,6 @@ function controllerHarmonic (canvasHarmonic) {
       speed: 1 + i * 0.05,
       timeOffset: 0
     }));
-    // Init vue
-    canvasOps.drawStatic(harmonicModel.number_balls);
   }
 
   function definitionFunctionMovementBall (xPosBall) {
@@ -133,23 +130,27 @@ function controllerHarmonic (canvasHarmonic) {
 
   function calculateBallsPosition (balls) {
     harmonicModel.balls = balls.map(ball => {
-      if (ball.timeOffset > 0) {
+      /*if (ball.timeOffset > 0) {
         return {
           ...ball,
           timeOffset: ball.timeOffset - 1
         }
-      }
+      }*/
 
-      const progress = ball.progress;
       let direction = ball.direction;
-      if ((direction === 1 && progress >= 100) || (direction === -1 && progress <= 0)) {
-        direction *= -1;
+      let newProgress = ball.progress + direction * ball.speed;
+      if (newProgress > 100) {
+        direction = -1
+        newProgress -= (newProgress - 100) * 2 
+      } else if (newProgress < 0) {
+        direction = 1
+        newProgress = Math.abs(newProgress)
       }
 
       return {
         ...ball,
         direction,
-        progress: progress + direction * ball.speed * 0.2
+        progress: newProgress
       }
     })
   }
@@ -188,6 +189,6 @@ window.onload = () => {
   harmonicController.initSystem()
 
   // Start harmonic
-  setInterval(harmonicController.lifeHarmonic, 1);
+  setInterval(harmonicController.lifeHarmonic, 10);
 
 }
